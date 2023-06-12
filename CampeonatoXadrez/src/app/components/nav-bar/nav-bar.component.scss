@@ -1,0 +1,40 @@
+form {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    margin: 16px;
+    margin-bottom: 32px;
+    .filters {
+        padding: 12px;
+        align-items: center;
+        display: flex;
+        justify-content: space-evenly;
+        background-color: rgb(242, 242, 242);
+        width: 70vw;
+        border: 1px solid rgb(110, 110, 110);
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        select, input {
+            background-color: transparent;
+            border: none;
+            
+        }
+
+        input { 
+            border: 1px solid rgb(110, 110, 110);
+            border-radius: 8px;
+            text-align: center;
+            width: 64px;
+            margin-left: 8px;
+        }
+
+        .buscar {
+            padding: 8px;
+            border-radius: 8px;
+            &:hover {
+                background-color: white;
+            }
+        }
+    }
+}

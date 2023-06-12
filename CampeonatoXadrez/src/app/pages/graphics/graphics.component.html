@@ -1,0 +1,50 @@
+<div class="flex-center">
+
+  <div class="graphic-container">
+    <ngx-charts-line-chart
+    [results]="results"
+    [xAxis]="true"
+    [yAxis]="true"
+    [showGridLines]="false"
+    [yAxisLabel]="'Custo'"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="'Objetos Arte'"
+    [showXAxisLabel]="true"
+    [legend]="true"
+    [legendTitle]="'Gastos'"
+    >
+    </ngx-charts-line-chart>
+  </div>
+
+  <div class="graphic-container">
+    <ngx-charts-bar-vertical-stacked
+    [results]="resultsDate"
+    [xAxis]="true"
+    [yAxis]="true"
+    [showGridLines]="false"
+    [yAxisLabel]="'Custo'"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="'Objetos Arte'"
+    [showXAxisLabel]="true"
+    [legend]="true"
+    [legendTitle]="'Ano-Mês'"
+    >
+    </ngx-charts-bar-vertical-stacked>
+  </div>
+  
+  <div class="graphic-container">
+    <ngx-charts-line-chart
+    [results]="results2"
+    [xAxis]="true"
+    [yAxis]="true"
+    [showGridLines]="false"
+    [yAxisLabel]="'Quantidade de Obejtos Arte'"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="'Coleções'"
+    [showXAxisLabel]="true"
+    [legend]="true"
+    [legendTitle]="'Empréstimos'"
+    >
+    </ngx-charts-line-chart>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="accordion-container">
+    <div class="accordion-title" [ngClass]="setClass()">
+        <button #button (click)="show_hide_content()" class="button-title">
+            <span style="color: rgb(181, 0, 0);">{{data.NumId}}</span>
+            - {{data.Titulo}}
+            <span style="color: rgb(181, 0, 0);">{{date}}</span>
+        </button>
+    </div>
+    <div #content class="accordion-content">
+        <div class="accordion-content-column">
+            <p class="property">Tipo de Arte: <span class="value">{{data.TipoArte}}</span></p>
+            <p class="property">Tipo Permanencia: <span class="value">{{data.TipoPermanencia}}</span></p>
+            <p class="property">Ano de Criação: <span class="value">{{data.AnoCriacao}}</span></p>
+            <p class="property">Artista: <span class="value">{{data.Artista}}</span></p>
+            <p class="property">País: <span class="value">{{data.PaisCultura}}</span></p>
+            <p class="property">Período: <span class="value">{{data.Periodo}}</span></p>
+            <p class="property">Custo: <span class="value">{{data.Custo}}</span></p>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,31 @@
+header {
+    background-color: rgb(1, 36, 113);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+
+    .nome-museu{
+        display: flex;
+        align-items: center;
+        p {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            margin-left: 12px;
+        }
+    }
+
+    .nav-span{
+        font-size: 12px;
+        font-weight: 500;
+        margin-right: 28px;
+        padding: 12px;
+        border-radius: 8px;
+        letter-spacing: .1;
+        color: white;
+        &:hover, &::after{
+            background-color: rgba($color: rgba(1, 36, 140, 0.053), $alpha: 1.0);
+        }
+    }
+}
