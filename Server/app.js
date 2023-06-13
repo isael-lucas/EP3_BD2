@@ -13,7 +13,7 @@ server.listen(3000, ()=> {
 });
 
 server.get('/objects', async (req, res)=>{
-    const objetos = await db.selectAll('OBJETOS_ARTE');
+    const objetos = await db.selectAll('Participante');
     res.send(objetos);
     console.log('Caiu');
 })
