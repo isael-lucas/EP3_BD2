@@ -17,6 +17,19 @@ server.get('/objects', async (req, res)=>{
     res.send(objetos);
     console.log('Caiu');
 })
+server.get('/jogos', async (req, res)=>{
+    const jogos = await db.selectAll('Jogos');
+    res.send(jogos);
+    console.log('Caiu');
+})
+server.post('/jogos', async (req, res)=>{
+    console.log('body:');
+    console.log(req.body);
+    const jogos = await db.selectFilterJogos(req.body);
+    res.send(jogos);
+    console.log('Caiu');
+})
+
 server.post('/objects', jsonParser, async (req, res)=>{
     console.log('body:');
     console.log(req.body);
@@ -26,7 +39,7 @@ server.post('/objects', jsonParser, async (req, res)=>{
 })
 
 server.get('/collections', async (req, res)=>{
-    const objetos = await db.selectAllCollections();
+    const objetos = await db.selectJogosByNumMovimentos();
     res.send(objetos);
     console.log('Caiu');
 })
