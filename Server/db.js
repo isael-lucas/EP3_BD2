@@ -1,10 +1,10 @@
-const SENHA = 'Leo*270902'
+const SENHA = 'password'
 async function connect() {
     if (global.connection && global.connection.state !== 'disconnected')
         return global.connection;
 
     const mysql = require('mysql2/promise');
-    const connection = await mysql.createConnection(`mysql://root:${SENHA}@localhost:3306/sys`);
+    const connection = await mysql.createConnection(`mysql://root:${SENHA}@localhost:3306/xadrez`);
     console.log('Conectou no mysql');
     return connection;
 }
