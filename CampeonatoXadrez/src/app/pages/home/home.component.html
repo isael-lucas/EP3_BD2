@@ -1,5 +1,3 @@
 <app-nav-bar (formValues)="filter($event)"></app-nav-bar>
 <h3 class="qtd">Quantidade: <span style="font-weight: 900;">{{data.length}}</span></h3>
 <app-accordion *ngFor="let obj of data" [data]="obj"></app-accordion>
-
-{{ data | json }}
