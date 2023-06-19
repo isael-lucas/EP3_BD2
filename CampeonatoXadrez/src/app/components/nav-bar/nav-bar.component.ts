@@ -21,9 +21,9 @@ export class NavBarComponent implements OnInit {
 
   ngOnInit(): void {
       this.forms = this.fb.group({
-        Arbitro: [null],
-        Jogadores: [null],
-        Hotel: [null]
+        Arbitro: [''],
+        Jogadores: [''],
+        Hotel: ['']
       })
   }
 
