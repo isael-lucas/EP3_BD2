@@ -37,6 +37,12 @@ server.get('/jogos_count_mov', async (req, res)=>{
     console.log('Caiu');
 })
 
+server.get('/jogadores_by_pais', async (req, res)=>{
+    const objetos = await db.selectNumJogadoresPorPais();
+    res.send(objetos);
+    console.log('Caiu');
+})
+
 server.get('/graphics', async (req, res)=>{
     const objetos = await db.selectFilterJogo();
     res.send(objetos);

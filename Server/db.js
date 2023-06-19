@@ -1,4 +1,4 @@
-const SENHA = 'root'
+const SENHA = 'password'
 async function connect() {
     if (global.connection && global.connection.state !== 'disconnected')
         return global.connection;
@@ -116,7 +116,7 @@ async function selectQtdJogosByQtdMovimentos(){
 
 async function selectNumJogadoresPorPais(){
     const conn = await connect(); 
-    const [rows] = await conn.query(`SELECT P.*, COUNT(J.NumAssoc) AS NumJogadores
+    const [rows] = await conn.query(`SELECT P.NomePais as NomePais, COUNT(J.NumAssoc) AS NumJogadores
     FROM Pais P 
     INNER JOIN Participante J ON P.NumPais = J.CodPais 
     WHERE TipoPart = 'J' 
