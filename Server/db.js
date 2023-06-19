@@ -1,4 +1,4 @@
-const SENHA = 'root'
+const SENHA = 'password'
 async function connect() {
     if (global.connection && global.connection.state !== 'disconnected')
         return global.connection;
@@ -91,6 +91,4 @@ async function selectFilterJogo(values) {
 
 
 
-module.exports = {selectAll, selectFilterJogo
-
-
+module.exports = {selectAll, selectFilterJogo}
