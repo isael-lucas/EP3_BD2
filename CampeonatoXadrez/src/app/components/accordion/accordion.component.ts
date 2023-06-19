@@ -38,11 +38,7 @@ export class AccordionComponent implements OnInit {
   }
 
   setClass(){
-    return {
-      'pintura': this.artType==='Pintura',
-      'escultura': this.artType==='Escultura',
-      'outro': this.artType!=='Pintura' && this.artType!=='Escultura',
-    }
+    return 'jogo'
   }
 
 }
