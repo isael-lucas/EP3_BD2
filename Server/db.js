@@ -116,7 +116,12 @@ async function selectQtdJogosByQtdMovimentos(){
 
 async function selectNumJogadoresPorPais(){
     const conn = await connect(); 
-    const [rows] = await conn.query(`SELECT P.*, COUNT(*) AS NumJogadores FROM Pais P INNER JOIN  `); 
+    const [rows] = await conn.query(`SELECT P.*, COUNT(J.NumAssoc) AS NumJogadores
+    FROM Pais P 
+    INNER JOIN Participante J ON P.NumPais = J.CodPais 
+    WHERE TipoPart = 'J' 
+    GROUP BY P.NumPais
+    ORDER BY P.NomePais ASC`); 
     return rows;
 }
 
