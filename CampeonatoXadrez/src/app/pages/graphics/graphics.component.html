@@ -8,7 +8,22 @@
     [showGridLines]="false"
     [yAxisLabel]="'Quantidade de Movimentos'"
     [showYAxisLabel]="true"
-    [xAxisLabel]="'Cod. Jogo'"
+    [xAxisLabel]="'Jogos'"
+    [showXAxisLabel]="true"
+    [legend]="false"
+    >
+    </ngx-charts-bar-vertical>
+  </div>
+
+  <div class="graphic-container">
+    <ngx-charts-bar-vertical
+    [results]="resultQtdJogosMov"
+    [xAxis]="true"
+    [yAxis]="true"
+    [showGridLines]="false"
+    [yAxisLabel]="'Quantidade de Jogos'"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="'Numero de Movimentos'"
     [showXAxisLabel]="true"
     [legend]="false"
     >

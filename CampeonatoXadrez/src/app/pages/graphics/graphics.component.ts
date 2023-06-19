@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LegendPosition } from '@swimlane/ngx-charts';
+import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { IntegrationService } from 'src/app/services/integration.service';
 
 @Component({
@@ -12,8 +12,23 @@ export class GraphicsComponent implements OnInit{
   data!: any;
   data2!: any;
   resultJogosMov: any;
-  resultsDate: any;
+  resultQtdJogosMov: any;
   results2: any;
+  colorScheme: Color =  {
+    name: 'xadrez',
+    domain: [
+      '#FF8A80', 
+      '#EA80FC',
+      '#8C9EFF', 
+      '#80D8FF', 
+      '#A7FFEB', 
+      '#CCFF90', 
+      '#FFFF8D', 
+      '#FF9E80'
+    ],
+    selectable: true,
+    group: ScaleType.Ordinal
+  };
 
   // options
 
@@ -30,15 +45,15 @@ export class GraphicsComponent implements OnInit{
       error: (error)=>{console.log(error);
       }
     })
-    // this.integration.selectAll('jogos_count_mov').subscribe({
-    //   next: (data)=>{
-    //     console.log(data);
-    //     this.data2 = data;
-    //     this.results2 = this.makeArray2();       
-    //   },
-    //   error: (error)=>{console.log(error);
-    //   }
-    // })
+    this.integration.selectAll('jogos_count_mov').subscribe({
+      next: (data)=>{
+        console.log(data);
+        this.data2 = data;
+        this.resultQtdJogosMov = this.getQtdJogosMov();       
+      },
+      error: (error)=>{console.log(error);
+      }
+    })
     // this.integration.selectAll('jogos_count_mov').subscribe({
     //   next: (data)=>{
     //     console.log(data);
@@ -66,6 +81,25 @@ export class GraphicsComponent implements OnInit{
     let result = [
       {
         name: 'N. de Movimentos',
+        series: seriesArr
+      }
+    ]
+
+    return seriesArr;
+  }
+  getQtdJogosMov(){
+    let seriesArr: any = []
+
+    this.data2.forEach((element: any) => {
+      let obj = {name: '', value: 0}
+      obj.name = element.CountMov;
+      obj.value = element.NumJogos;
+      seriesArr.push(obj);
+    });
+
+    let result = [
+      {
+        name: 'Qtd. de Jogos',
         series: seriesArr
       }
     ]
