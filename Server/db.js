@@ -69,10 +69,10 @@ async function selectFilterJogo(values) {
                   INNER JOIN Participante JP ON JP.NumAssoc = J.JogadorP 
                   INNER JOIN Salao S ON S.IdSal = J.IdSal
                   INNER JOIN Hotel H ON H.NomeHotel = S.NomeHotel 
-                  INNER JOIN Movimento M ON J.CODJOGO = M.CODJOGO GROUP BY J.CODJOGO 
-                   ${b ? `WHERE ${jogadores !== null ? `((JogadorB LIKE '%${jogadores}%') OR (JogadorP LIKE '%${jogadores}%'))` : ''} 
+                  INNER JOIN Movimento M ON J.CODJOGO = M.CODJOGO
+                   ${b ? `WHERE ${jogadores !== null ? `(JB.NomeAssoc LIKE '%${jogadores}%' OR JP.NomeAssoc LIKE '%${jogadores}%')` : ''} 
                            ${arbitro !== null && jogadores !== null ? 'AND ' : ''}
-                           ${arbitro !== null ? `Arbitro LIKE '%${arbitro}%'` : ''}
+                           ${arbitro !== null ? `A.NomeAssoc LIKE '%${arbitro}%'` : ''}
                            ${hotel !== null && (jogadores !== null || arbitro !== null) ? 'AND ' : ''}
                            ${hotel !== null ? `H.NomeHotel LIKE '%${hotel}%'` : ''}
                            ${diaJorn !== null && (jogadores !== null || arbitro !== null || hotel !== null) ? 'AND ' : ''}
@@ -81,7 +81,7 @@ async function selectFilterJogo(values) {
                            ${mesJorn !== null ? `J.MesJorn = ${mesJorn}` : ''}
                            ${anoJorn !== null && (jogadores !== null || arbitro !== null || hotel !== null || diaJorn !== null || mesJorn !== null) ? 'AND ' : ''}
                            ${anoJorn !== null ? `J.AnoJorn = ${anoJorn}` : ''}`
-        : ''} 
+        : ''}     GROUP BY J.CODJOGO 
                   ORDER BY J.CodJogo ${order}`;
   
     const conn = await connect();

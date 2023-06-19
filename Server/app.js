@@ -17,7 +17,7 @@ server.get('/jogos', async (req, res)=>{
     res.send(jogos);
     console.log('Caiu');
 })
-server.post('/jogos', async (req, res)=>{
+server.post('/jogos', jsonParser, async (req, res)=>{
     console.log('body:');
     console.log(req.body);
     const jogos = await db.selectFilterJogo(req.body);
