@@ -13,7 +13,7 @@ server.listen(3000, ()=> {
 });
 
 server.get('/jogos', async (req, res)=>{
-    const jogos = await db.selectAll('Jogo');
+    const jogos = await db.selectFilterJogo(null);
     res.send(jogos);
     console.log('Caiu');
 })
