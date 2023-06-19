@@ -20,7 +20,7 @@ async function selectFilterJogo(values) {
     let order = '';
     let jogadores = null;
     let arbitro = null;
-    let local = null;
+    let hotel = null;
     let diaJorn = null;
     let mesJorn = null;
     let anoJorn = null;
