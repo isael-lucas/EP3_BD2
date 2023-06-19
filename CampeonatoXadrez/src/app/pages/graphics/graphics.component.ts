@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { IntegrationService } from 'src/app/services/integration.service';
+import { Color, ScaleType } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-graphics',
@@ -14,6 +15,7 @@ export class GraphicsComponent implements OnInit{
   resultJogosMov: any;
   resultQtdJogosMov: any;
   results2: any;
+<<<<<<< HEAD
   colorScheme: Color =  {
     name: 'xadrez',
     domain: [
@@ -29,6 +31,19 @@ export class GraphicsComponent implements OnInit{
     selectable: true,
     group: ScaleType.Ordinal
   };
+=======
+  colorScheme: Color = {
+    name: 'custom',
+    selectable: true,  
+    group: ScaleType.Ordinal,
+    domain: [
+      'black', 
+      '#d0d1d3',
+    ]
+  };
+  
+
+>>>>>>> 4c53af5513b1d28ffdca6ea26f2c7614ad6f5d37
 
   // options
 
@@ -45,6 +60,7 @@ export class GraphicsComponent implements OnInit{
       error: (error)=>{console.log(error);
       }
     })
+<<<<<<< HEAD
     this.integration.selectAll('jogos_count_mov').subscribe({
       next: (data)=>{
         console.log(data);
@@ -63,6 +79,8 @@ export class GraphicsComponent implements OnInit{
     //   error: (error)=>{console.log(error);
     //   }
     // })
+=======
+>>>>>>> 4c53af5513b1d28ffdca6ea26f2c7614ad6f5d37
   }
 
   constructor(private integration: IntegrationService) {
