@@ -90,9 +90,27 @@ async function selectFilterJogo(values) {
     return rows;
 }
 
+async function selectJogosQtdMovimentos(){
+    const conn = await connect(); 
+    const [rows] = await conn.query(`SELECT 
+        J.CodJogo,
+        COUNT(M.CodJogo) AS QtdMovimento
+    FROM Jogo J 
+    INNER JOIN Movimento M ON J.CodJogo = M.CodJogo
+    GROUP BY J.CodJogo 
+    ORDER BY J.CodJogo ASC`); 
+    return rows;
+}
+
 async function selectQtdJogosByQtdMovimentos(){
     const conn = await connect(); 
-    const [rows] = await conn.query(`SELECT * FROM `); 
+    const [rows] = await conn.query(`SELECT COUNT(J.CodJogo) AS NumJogos, J.QtdMovimento
+    FROM (
+        SELECT J.CodJogo, COUNT(M.CodJogo) AS QtdMovimento
+        FROM Jogo J
+        INNER JOIN Movimento M ON J.CodJogo = M.CodJogo
+        GROUP BY J.CodJogo
+    ) AS J GROUP BY QtdMovimento ORDER BY QtdMovimento ASC`); 
     return rows;
 }
 
@@ -102,4 +120,4 @@ async function selectNumJogadoresPorPais(){
     return rows;
 }
 
-module.exports = {selectAll, selectFilterJogo, selectQtdJogosByQtdMovimentos, selectNumJogadoresPorPais}
+module.exports = {selectAll, selectFilterJogo, selectJogosQtdMovimentos, selectQtdJogosByQtdMovimentos, selectNumJogadoresPorPais}
