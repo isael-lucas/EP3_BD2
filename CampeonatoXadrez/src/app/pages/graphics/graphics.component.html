@@ -1,22 +1,21 @@
 <div class="flex-center">
 
   <div class="graphic-container">
-    <ngx-charts-line-chart
-    [results]="results"
+    <ngx-charts-bar-vertical
+    [results]="resultJogosMov"
     [xAxis]="true"
     [yAxis]="true"
     [showGridLines]="false"
-    [yAxisLabel]="'Custo'"
+    [yAxisLabel]="'Quantidade de Movimentos'"
     [showYAxisLabel]="true"
-    [xAxisLabel]="'Objetos Arte'"
+    [xAxisLabel]="'Cod. Jogo'"
     [showXAxisLabel]="true"
-    [legend]="true"
-    [legendTitle]="'Gastos'"
+    [legend]="false"
     >
-    </ngx-charts-line-chart>
+    </ngx-charts-bar-vertical>
   </div>
 
-  <div class="graphic-container">
+  <!-- <div class="graphic-container">
     <ngx-charts-bar-vertical-stacked
     [results]="resultsDate"
     [xAxis]="true"
@@ -46,5 +45,5 @@
     [legendTitle]="'Empréstimos'"
     >
     </ngx-charts-line-chart>
-  </div>
+  </div> -->
 </div>
