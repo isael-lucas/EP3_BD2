@@ -91,6 +91,5 @@ async function selectFilterJogo(values) {
 
 
 
-module.exports = {selectAll, selectFilterJogo
-
+module.exports = {selectAll, selectFilterJogo}
 

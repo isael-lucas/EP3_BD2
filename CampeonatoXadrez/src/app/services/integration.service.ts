@@ -15,16 +15,6 @@ export class IntegrationService {
 
   selectQuery(values: any){
     console.log(values);
-    return this.http.post<Observable<any>>('http://localhost:3000/objects', values);
-  }
-
-  selectQueryCollection(values: any){
-    console.log(values);
-    return this.http.post<Observable<any>>('http://localhost:3000/collections', values);
-  }
-
-  selectQueryPurchase(values: any){
-    console.log(values);
-    return this.http.post<Observable<any>>('http://localhost:3000/purchases', values);
+    return this.http.post<Observable<any>>('http://localhost:3000/jogos', values);
   }
 }
