@@ -25,8 +25,20 @@ server.post('/jogos', jsonParser, async (req, res)=>{
     console.log('Caiu');
 })
 
+server.get('/jogos_mov', jsonParser, async (req, res)=>{
+    const objetos = await db.selectJogosQtdMovimentos();
+    res.send(objetos);
+    console.log('Caiu');
+})
+
+server.get('/jogos_count_mov', jsonParser, async (req, res)=>{
+    const objetos = await db.selectQtdJogosByQtdMovimentos();
+    res.send(objetos);
+    console.log('Caiu');
+})
+
 server.get('/graphics', jsonParser, async (req, res)=>{
-    const objetos = await db.selectAllPurchases();
+    const objetos = await db.selectFilterJogo();
     res.send(objetos);
     console.log('Caiu');
 })
