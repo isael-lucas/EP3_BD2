@@ -1,4 +1,4 @@
-const SENHA = 'root'
+const SENHA = 'password'
 async function connect() {
     if (global.connection && global.connection.state !== 'disconnected')
         return global.connection;
@@ -20,7 +20,7 @@ async function selectFilterJogo(values) {
     let order = '';
     let jogadores = null;
     let arbitro = null;
-    let local = null;
+    let hotel = null;
     let diaJorn = null;
     let mesJorn = null;
     let anoJorn = null;
@@ -38,8 +38,8 @@ async function selectFilterJogo(values) {
         arbitro = values[`${property}`];
         b = true;
       }
-      if (property === 'Local' && values[`${property}`] !== '') {
-        local = values[`${property}`];
+      if (property === 'Hotel' && values[`${property}`] !== '') {
+        hotel = values[`${property}`];
         b = true;
       }
       if (property === 'DiaJorn' && values[`${property}`] !== '') {
@@ -73,13 +73,13 @@ async function selectFilterJogo(values) {
                    ${b ? `WHERE ${jogadores !== null ? `((JogadorB LIKE '%${jogadores}%') OR (JogadorP LIKE '%${jogadores}%'))` : ''} 
                            ${arbitro !== null && jogadores !== null ? 'AND ' : ''}
                            ${arbitro !== null ? `Arbitro LIKE '%${arbitro}%'` : ''}
-                           ${local !== null && (jogadores !== null || arbitro !== null) ? 'AND ' : ''}
-                           ${local !== null ? `Lugar LIKE '%${local}%'` : ''}
-                           ${diaJorn !== null && (jogadores !== null || arbitro !== null || local !== null) ? 'AND ' : ''}
+                           ${hotel !== null && (jogadores !== null || arbitro !== null) ? 'AND ' : ''}
+                           ${hotel !== null ? `H.NomeHotel LIKE '%${hotel}%'` : ''}
+                           ${diaJorn !== null && (jogadores !== null || arbitro !== null || hotel !== null) ? 'AND ' : ''}
                            ${diaJorn !== null ? `J.DiaJorn = ${diaJorn}` : ''}
-                           ${mesJorn !== null && (jogadores !== null || arbitro !== null || local !== null || diaJorn !== null) ? 'AND ' : ''}
+                           ${mesJorn !== null && (jogadores !== null || arbitro !== null || hotel !== null || diaJorn !== null) ? 'AND ' : ''}
                            ${mesJorn !== null ? `J.MesJorn = ${mesJorn}` : ''}
-                           ${anoJorn !== null && (jogadores !== null || arbitro !== null || local !== null || diaJorn !== null || mesJorn !== null) ? 'AND ' : ''}
+                           ${anoJorn !== null && (jogadores !== null || arbitro !== null || hotel !== null || diaJorn !== null || mesJorn !== null) ? 'AND ' : ''}
                            ${anoJorn !== null ? `J.AnoJorn = ${anoJorn}` : ''}`
         : ''} 
                   ORDER BY J.CodJogo ${order}`;
@@ -87,9 +87,18 @@ async function selectFilterJogo(values) {
     const conn = await connect();
     const [rows] = await conn.query(query);
     return rows;
-  }
+}
 
+async function selectQtdJogosByQtdMovimentos(){
+    const conn = await connect(); 
+    const [rows] = await conn.query(`SELECT * FROM `); 
+    return rows;
+}
 
+async function selectNumJogadoresPorPais(){
+    const conn = await connect(); 
+    const [rows] = await conn.query(`SELECT P.*, COUNT(*) AS NumJogadores FROM Pais P INNER JOIN  `); 
+    return rows;
+}
 
-module.exports = {selectAll, selectFilterJogo}
-
+module.exports = {selectAll, selectFilterJogo, selectQtdJogosByQtdMovimentos, selectNumJogadoresPorPais}
