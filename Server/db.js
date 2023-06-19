@@ -101,5 +101,4 @@ async function selectNumJogadoresPorPais(){
     return rows;
 }
 
-
 module.exports = {selectAll, selectFilterJogo, selectQtdJogosByQtdMovimentos, selectNumJogadoresPorPais}

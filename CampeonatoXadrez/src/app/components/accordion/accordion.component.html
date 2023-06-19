@@ -1,7 +1,7 @@
 <div class="accordion-container">
     <div class="accordion-title" [ngClass]="setClass()">
         <button #button (click)="show_hide_content()" class="button-title">
-            <span style="color: rgb(255, 251, 251);">{{data.JogadorB}} X {{data.JogadorP}} dia: {{data.Dia}}</span>
+            <span style="color: rgb(255, 251, 251);">{{data.JogadorB}} X {{data.JogadorP}} - {{data.DiaJorn}}/{{data.MesJorn}}/{{data.AnoJorn}}</span>
         </button>
     </div>
     <div #content class="accordion-content">
@@ -10,7 +10,7 @@
             <p class="property">jogador/pretas: <span class="value">{{data.JogadorP}}</span></p>
             <p class="property">arbitro: <span class="value">{{data.Arbitro}}</span></p>
             <p class="property">lugar: <span class="value">{{data.Lugar}}</span></p>
-            <p class="property">dia: <span class="value">{{data.Dia}}</span></p>
+            <p class="property">dia: <span class="value">{{data.DiaJorn}}/{{data.MesJorn}}/{{data.AnoJorn}}</span></p>
         </div>
     </div>
 </div>

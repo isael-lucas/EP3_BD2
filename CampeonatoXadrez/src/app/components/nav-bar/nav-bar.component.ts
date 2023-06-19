@@ -20,27 +20,11 @@ export class NavBarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.type === 'objeto') {
       this.forms = this.fb.group({
-        TipoArte: ['Todos'],
-        TipoPermanencia: ['Todos'],
-        AnoCriacao: [null]
+        Arbitro: [null],
+        Jogadores: [null],
+        Hotel: [null]
       })
-    }
-    else if (this.type === 'colecao'){
-      
-      this.forms = this.fb.group({
-        Ordem: ['desc'],
-        Mes: ['Todos'],
-        AnoCriacao: [null]
-      })
-    }
-    else{
-      this.forms = this.fb.group({
-        Mes: ['Todos'],
-        AnoCriacao: [null]
-      })
-    }
   }
 
   filter(values: any){
