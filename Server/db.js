@@ -60,9 +60,10 @@ async function selectFilterJogo(values) {
                       J.*,
                       JB.NomeAssoc AS JogadorB, 
                       JP.NomeAssoc AS JogadorP,
-                      A.NomeAssoc AS Arbitro, 
+                      A.NomeAssoc AS Arbitro,
+                      S.capacidade AS CapacidadeSalao,
                       CONCAT(H.NomeHotel, ' - ', H.EndHotel) AS Lugar,
-                      COUNT(M.CODJOGO) AS QtdMovimento 
+                      COUNT(M.CODJOGO) AS QtdMovimento
                   FROM Jogo J 
                   INNER JOIN Participante A ON A.NumAssoc = J.NumArb
                   INNER JOIN Participante JB ON JB.NumAssoc = J.JogadorB 
