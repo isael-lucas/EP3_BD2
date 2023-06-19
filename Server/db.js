@@ -16,17 +16,10 @@ async function selectAll(str){
     return rows;
 }
 
-async function selectJogosByNumMovimentos(){
-    const conn = await connect();
-    const query = "SELECT J.CODJOGO, COUNT(M.CODJOGO) QTD FROM JOGO J INNER JOIN MOVIMENTO M ON J.CODJOGO = M.CODJOGO GROUP BY J.CODJOGO"
-    const [rows] = await conn.query(query); 
-    return rows;
-}
-
-async function selectFilterJogos(values) {
+async function selectFilterJogo(values) {
     let order = '';
     let jogadores = null;
-    let arbitros = null;
+    let arbitro = null;
     let local = null;
     let diaJorn = null;
     let mesJorn = null;
@@ -41,8 +34,8 @@ async function selectFilterJogos(values) {
         jogadores = values[`${property}`];
         b = true;
       }
-      if (property === 'Arbitros' && values[`${property}`] !== '') {
-        arbitros = values[`${property}`];
+      if (property === 'Arbitro' && values[`${property}`] !== '') {
+        arbitro = values[`${property}`];
         b = true;
       }
       if (property === 'Local' && values[`${property}`] !== '') {
@@ -63,22 +56,33 @@ async function selectFilterJogos(values) {
       }
     }
   
-    const query = `SELECT J.* FROM Jogo J 
-                   INNER JOIN Jogador J1 ON J1.NumAssoc = J.NumArb
-                   INNER JOIN Salao S ON S.IdSal = J.IdSal
-                   ${b ? `WHERE ${jogadores !== null ? `J1.NomeAssoc = '${jogadores}'` : ''} 
-                           ${arbitros !== null && jogadores !== null ? 'AND ' : ''}
-                           ${arbitros !== null ? `J.NumArb = ${arbitros}` : ''}
-                           ${local !== null && (jogadores !== null || arbitros !== null) ? 'AND ' : ''}
-                           ${local !== null ? `S.NomeHotel = '${local}'` : ''}
-                           ${diaJorn !== null && (jogadores !== null || arbitros !== null || local !== null) ? 'AND ' : ''}
+    const query = `SELECT 
+                      J.*,
+                      JB.NomeAssoc AS JogadorB, 
+                      JP.NomeAssoc AS JogadorP,
+                      A.NomeAssoc AS Arbitro, 
+                      CONCAT(H.NomeHotel, ' - ', H.EndHotel) AS Lugar,
+                      COUNT(M.CODJOGO) AS QtdMovimento 
+                  FROM Jogo J 
+                  INNER JOIN Participante A ON A.NumAssoc = J.NumArb
+                  INNER JOIN Participante JB ON JB.NumAssoc = J.JogadorB 
+                  INNER JOIN Participante JP ON JP.NumAssoc = J.JogadorP 
+                  INNER JOIN Salao S ON S.IdSal = J.IdSal
+                  INNER JOIN Hotel H ON H.NomeHotel = S.NomeHotel 
+                  INNER JOIN Movimento M ON J.CODJOGO = M.CODJOGO GROUP BY J.CODJOGO 
+                   ${b ? `WHERE ${jogadores !== null ? `((JogadorB LIKE '%${jogadores}%') OR (JogadorP LIKE '%${jogadores}%'))` : ''} 
+                           ${arbitro !== null && jogadores !== null ? 'AND ' : ''}
+                           ${arbitro !== null ? `Arbitro LIKE '%${arbitro}%'` : ''}
+                           ${local !== null && (jogadores !== null || arbitro !== null) ? 'AND ' : ''}
+                           ${local !== null ? `Lugar LIKE '%${local}%'` : ''}
+                           ${diaJorn !== null && (jogadores !== null || arbitro !== null || local !== null) ? 'AND ' : ''}
                            ${diaJorn !== null ? `J.DiaJorn = ${diaJorn}` : ''}
-                           ${mesJorn !== null && (jogadores !== null || arbitros !== null || local !== null || diaJorn !== null) ? 'AND ' : ''}
+                           ${mesJorn !== null && (jogadores !== null || arbitro !== null || local !== null || diaJorn !== null) ? 'AND ' : ''}
                            ${mesJorn !== null ? `J.MesJorn = ${mesJorn}` : ''}
-                           ${anoJorn !== null && (jogadores !== null || arbitros !== null || local !== null || diaJorn !== null || mesJorn !== null) ? 'AND ' : ''}
+                           ${anoJorn !== null && (jogadores !== null || arbitro !== null || local !== null || diaJorn !== null || mesJorn !== null) ? 'AND ' : ''}
                            ${anoJorn !== null ? `J.AnoJorn = ${anoJorn}` : ''}`
         : ''} 
-                   ORDER BY J.CodJogo ${order}`;
+                  ORDER BY J.CodJogo ${order}`;
   
     const conn = await connect();
     const [rows] = await conn.query(query);
@@ -86,74 +90,7 @@ async function selectFilterJogos(values) {
   }
 
 
-async function selectAllCollections(){
-    const conn = await connect();
-    const query = "SELECT A.*, COUNT(*) QTD FROM COLECAO A INNER JOIN EMPRESTADOS B ON A.NOME = B.COLECAO GROUP BY A.NOME ORDER BY QTD DESC"
-    const [rows] = await conn.query(query); 
-    return rows;
-}
 
-async function selectAllPurchases(){
-    const conn = await connect();
-    const query = "select * from objetos_arte A INNER JOIN PERMANENTES B ON A.NUMID = B.OBJETO_ARTE_ID"
-    const [rows] = await conn.query(query); 
-    return rows;
-}
-
-async function selectFilter(values){
-    let aux = []
-    let str = ''
-    i = 0
-    for (const property in values) {
-        if (values[`${property}`] !== 'Todos' && values[`${property}`] !== null) {
-            aux.push(values[`${property}`])
-            str = `${str} ${i>0 && i!=Object.keys(values).length?'AND':''} ${property}=?`
-            i=i+1
-        }
-    }
-    const query = `SELECT * FROM objetos_arte ${aux.length>0?'WHERE':''}${str}`
-    const conn = await connect();
-    const [rows] = await conn.query(query, aux);
-    return rows;
-}
-
-async function selectFilterCollection(values){
-    let order = ''
-    let mes = null
-    let year = null
-    let b = false
-    for (const property in values) {
-        if (property === 'Ordem') {
-            order = values[`${property}`]
-        }
-        if (property === 'Mes' && values[`${property}`]!=='Todos') {
-            mes = values[`${property}`]
-            b = true
-
-        }
-        if (property === 'AnoCriacao' && values[`${property}`]!==null) {
-            year = values[`${property}`]
-            b = true
-        }
-    }
-    const query = `SELECT A.*, COUNT(*) QTD FROM COLECAO A INNER JOIN EMPRESTADOS B ON A.NOME = B.COLECAO ${b?`WHERE ${year!==null?`YEAR(DATAEMPRESTIMO) = ${year}`:''}${mes!==null && year !== null?' AND ':''}${mes!==null?`MONTH(DATAEMPRESTIMO) = ${mes}`:''}`:''} GROUP BY A.NOME ORDER BY QTD ${order}`
-    const conn = await connect();
-    const [rows] = await conn.query(query);
-    return rows;
-}
-
-async function selectFilterPurchase(values){
-    let order = ''
-    let mes = values.Mes
-    let year = values.AnoCriacao
-    let m = mes!==null&&mes!=='Todos'
-    let y = year!==null
-    const query = `select * from objetos_arte A INNER JOIN PERMANENTES B ON A.NUMID = B.OBJETO_ARTE_ID ${m|y?`WHERE ${y?`YEAR(DATAAQUISICAO) = ${year}`:''}${m&&y?' AND ':''}${m?`MONTH(DATAAQUISICAO) = ${mes}`:''}`:''}`
-    const conn = await connect();
-    const [rows] = await conn.query(query);
-    return rows;
-}
-
-module.exports = {selectAll, selectFilter, selectAllCollections, selectFilterCollection, selectAllPurchases, selectFilterPurchase, selectJogosByNumMovimentos, selectFilterJogos}
+module.exports = {selectAll, selectFilterJogo}
 
 

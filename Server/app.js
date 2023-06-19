@@ -12,55 +12,16 @@ server.listen(3000, ()=> {
     console.log('Servidor Iniciado na porta 3000');
 });
 
-server.get('/objects', async (req, res)=>{
-    const objetos = await db.selectAll('Participante');
-    res.send(objetos);
-    console.log('Caiu');
-})
 server.get('/jogos', async (req, res)=>{
-    const jogos = await db.selectAll('Jogos');
+    const jogos = await db.selectFilterJogo(null);
     res.send(jogos);
     console.log('Caiu');
 })
 server.post('/jogos', async (req, res)=>{
     console.log('body:');
     console.log(req.body);
-    const jogos = await db.selectFilterJogos(req.body);
+    const jogos = await db.selectFilterJogo(req.body);
     res.send(jogos);
-    console.log('Caiu');
-})
-
-server.post('/objects', jsonParser, async (req, res)=>{
-    console.log('body:');
-    console.log(req.body);
-    const objetos = await db.selectFilter(req.body);
-    res.send(objetos);
-    console.log('Caiu');
-})
-
-server.get('/collections', async (req, res)=>{
-    const objetos = await db.selectJogosByNumMovimentos();
-    res.send(objetos);
-    console.log('Caiu');
-})
-server.post('/collections', jsonParser, async (req, res)=>{
-    console.log('body:');
-    console.log(req.body);
-    const objetos = await db.selectFilterCollection(req.body);
-    res.send(objetos);
-    console.log('Caiu');
-})
-
-server.get('/purchases', async (req, res)=>{
-    const objetos = await db.selectAllPurchases();
-    res.send(objetos);
-    console.log('Caiu');
-})
-server.post('/purchases', jsonParser, async (req, res)=>{
-    console.log('body:');
-    console.log(req.body);
-    const objetos = await db.selectFilterPurchase(req.body);
-    res.send(objetos);
     console.log('Caiu');
 })
 
