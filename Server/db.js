@@ -104,7 +104,7 @@ async function selectJogosQtdMovimentos(){
 
 async function selectQtdJogosByQtdMovimentos(){
     const conn = await connect(); 
-    const [rows] = await conn.query(`SELECT COUNT(J.CodJogo) AS NumJogos, J.QtdMovimento
+    const [rows] = await conn.query(`SELECT COUNT(J.CodJogo) AS NumJogos, J.QtdMovimento AS CountMov
     FROM (
         SELECT J.CodJogo, COUNT(M.CodJogo) AS QtdMovimento
         FROM Jogo J
