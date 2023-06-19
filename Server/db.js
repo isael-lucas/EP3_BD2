@@ -1,4 +1,5 @@
 const SENHA = 'password'
+const SENHA = 'password'
 async function connect() {
     if (global.connection && global.connection.state !== 'disconnected')
         return global.connection;
@@ -20,7 +21,7 @@ async function selectFilterJogo(values) {
     let order = '';
     let jogadores = null;
     let arbitro = null;
-    let local = null;
+    let hotel = null;
     let diaJorn = null;
     let mesJorn = null;
     let anoJorn = null;
@@ -38,8 +39,8 @@ async function selectFilterJogo(values) {
         arbitro = values[`${property}`];
         b = true;
       }
-      if (property === 'Local' && values[`${property}`] !== '') {
-        local = values[`${property}`];
+      if (property === 'Hotel' && values[`${property}`] !== '') {
+        hotel = values[`${property}`];
         b = true;
       }
       if (property === 'DiaJorn' && values[`${property}`] !== '') {
@@ -60,37 +61,69 @@ async function selectFilterJogo(values) {
                       J.*,
                       JB.NomeAssoc AS JogadorB, 
                       JP.NomeAssoc AS JogadorP,
-                      A.NomeAssoc AS Arbitro, 
+                      A.NomeAssoc AS Arbitro,
+                      S.capacidade AS CapacidadeSalao,
                       CONCAT(H.NomeHotel, ' - ', H.EndHotel) AS Lugar,
-                      COUNT(M.CODJOGO) AS QtdMovimento 
+                      COUNT(M.CODJOGO) AS QtdMovimento
                   FROM Jogo J 
                   INNER JOIN Participante A ON A.NumAssoc = J.NumArb
                   INNER JOIN Participante JB ON JB.NumAssoc = J.JogadorB 
                   INNER JOIN Participante JP ON JP.NumAssoc = J.JogadorP 
                   INNER JOIN Salao S ON S.IdSal = J.IdSal
                   INNER JOIN Hotel H ON H.NomeHotel = S.NomeHotel 
-                  INNER JOIN Movimento M ON J.CODJOGO = M.CODJOGO GROUP BY J.CODJOGO 
-                   ${b ? `WHERE ${jogadores !== null ? `((JogadorB LIKE '%${jogadores}%') OR (JogadorP LIKE '%${jogadores}%'))` : ''} 
+                  INNER JOIN Movimento M ON J.CODJOGO = M.CODJOGO
+                   ${b ? `WHERE ${jogadores !== null ? `(JB.NomeAssoc LIKE '%${jogadores}%' OR JP.NomeAssoc LIKE '%${jogadores}%')` : ''} 
                            ${arbitro !== null && jogadores !== null ? 'AND ' : ''}
-                           ${arbitro !== null ? `Arbitro LIKE '%${arbitro}%'` : ''}
-                           ${local !== null && (jogadores !== null || arbitro !== null) ? 'AND ' : ''}
-                           ${local !== null ? `S.NomeHotel LIKE '%${local}%'` : ''}
-                           ${diaJorn !== null && (jogadores !== null || arbitro !== null || local !== null) ? 'AND ' : ''}
+                           ${arbitro !== null ? `A.NomeAssoc LIKE '%${arbitro}%'` : ''}
+                           ${hotel !== null && (jogadores !== null || arbitro !== null) ? 'AND ' : ''}
+                           ${hotel !== null ? `H.NomeHotel LIKE '%${hotel}%'` : ''}
+                           ${diaJorn !== null && (jogadores !== null || arbitro !== null || hotel !== null) ? 'AND ' : ''}
                            ${diaJorn !== null ? `J.DiaJorn = ${diaJorn}` : ''}
-                           ${mesJorn !== null && (jogadores !== null || arbitro !== null || local !== null || diaJorn !== null) ? 'AND ' : ''}
+                           ${mesJorn !== null && (jogadores !== null || arbitro !== null || hotel !== null || diaJorn !== null) ? 'AND ' : ''}
                            ${mesJorn !== null ? `J.MesJorn = ${mesJorn}` : ''}
-                           ${anoJorn !== null && (jogadores !== null || arbitro !== null || local !== null || diaJorn !== null || mesJorn !== null) ? 'AND ' : ''}
+                           ${anoJorn !== null && (jogadores !== null || arbitro !== null || hotel !== null || diaJorn !== null || mesJorn !== null) ? 'AND ' : ''}
                            ${anoJorn !== null ? `J.AnoJorn = ${anoJorn}` : ''}`
-        : ''} 
+        : ''}     GROUP BY J.CODJOGO 
                   ORDER BY J.CodJogo ${order}`;
   
     const conn = await connect();
     const [rows] = await conn.query(query);
     return rows;
-  }
+}
 
+async function selectJogosQtdMovimentos(){
+    const conn = await connect(); 
+    const [rows] = await conn.query(`SELECT 
+        J.CodJogo,
+        COUNT(M.CodJogo) AS QtdMovimento
+    FROM Jogo J 
+    INNER JOIN Movimento M ON J.CodJogo = M.CodJogo
+    GROUP BY J.CodJogo 
+    ORDER BY J.CodJogo ASC`); 
+    return rows;
+}
 
+async function selectQtdJogosByQtdMovimentos(){
+    const conn = await connect(); 
+    const [rows] = await conn.query(`SELECT COUNT(J.CodJogo) AS NumJogos, J.QtdMovimento AS CountMov
+    FROM (
+        SELECT J.CodJogo, COUNT(M.CodJogo) AS QtdMovimento
+        FROM Jogo J
+        INNER JOIN Movimento M ON J.CodJogo = M.CodJogo
+        GROUP BY J.CodJogo
+    ) AS J GROUP BY QtdMovimento ORDER BY QtdMovimento ASC`); 
+    return rows;
+}
 
-module.exports = {selectAll, selectFilterJogo}
+async function selectNumJogadoresPorPais(){
+    const conn = await connect(); 
+    const [rows] = await conn.query(`SELECT P.NomePais as NomePais, COUNT(J.NumAssoc) AS NumJogadores
+    FROM Pais P 
+    INNER JOIN Participante J ON P.NumPais = J.CodPais 
+    WHERE TipoPart = 'J' 
+    GROUP BY P.NumPais
+    ORDER BY P.NomePais ASC`); 
+    return rows;
+}
 
-
+module.exports = {selectAll, selectFilterJogo, selectJogosQtdMovimentos, selectQtdJogosByQtdMovimentos, selectNumJogadoresPorPais}

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { IntegrationService } from 'src/app/services/integration.service';
 
 @Component({
@@ -10,31 +11,52 @@ export class GraphicsComponent implements OnInit{
 
   data!: any;
   data2!: any;
-  results: any;
-  resultsDate: any;
-  results2: any;
+  data3!: any;
+  resultJogosMov: any;
+  resultQtdJogosMov: any;
+  resultJogadoresPais: any;
+  colorScheme: Color = {
+    name: 'custom',
+    selectable: true,  
+    group: ScaleType.Ordinal,
+    domain: [
+      'black', 
+      '#d0d1d3',
+    ]
+  };
+  
+
 
   // options
 
 
   ngOnInit(){
-    this.integration.selectAll('purchases').subscribe({
+    this.integration.selectAll('jogos_mov').subscribe({
       next: (data)=>{
         console.log(data);
         this.data = data;
-        this.results = this.makeArray();
-        this.resultsDate = this.makeArrayDate();
-        console.log(this.results);
+        this.resultJogosMov = this.getJogosMov();
+        console.log(this.resultJogosMov);
         
       },
       error: (error)=>{console.log(error);
       }
     })
-    this.integration.selectAll('collections').subscribe({
+    this.integration.selectAll('jogos_count_mov').subscribe({
       next: (data)=>{
         console.log(data);
         this.data2 = data;
-        this.results2 = this.makeArray2();       
+        this.resultQtdJogosMov = this.getQtdJogosMov();       
+      },
+      error: (error)=>{console.log(error);
+      }
+    })
+    this.integration.selectAll('jogadores_by_pais').subscribe({
+      next: (data)=>{
+        console.log(data);
+        this.data3 = data;
+        console.log(this.data3);
+        this.resultJogadoresPais = this.getJogadoresByPais();       
       },
       error: (error)=>{console.log(error);
       }
@@ -44,58 +66,61 @@ export class GraphicsComponent implements OnInit{
   constructor(private integration: IntegrationService) {
   }
 
-  makeArray(){
+  getJogosMov(){
     let seriesArr: any = []
 
     this.data.forEach((element: any) => {
       let obj = {name: '', value: 0}
-      obj.name = element.Titulo;
-      obj.value = parseFloat(element.Custo);
+      obj.name = `Jogo ${element.CodJogo}`;
+      obj.value = element.QtdMovimento;
       seriesArr.push(obj);
     });
 
     let result = [
       {
-        name: 'Curva de Gastos',
+        name: 'N. de Movimentos',
         series: seriesArr
       }
     ]
 
-    return result;
+    return seriesArr;
   }
-  makeArrayDate(){
-    let seriesArr: any = []
-    let aux = []
-    let result: any = []
-    this.data.forEach((element: any) => {
-      let obj = {name: '', value: 0}
-      let obj2 = {name:element.Titulo, series:[obj]}
-      obj.name = element.DataAquisicao.substring(0,7);
-      obj.value = parseFloat(element.Custo);
-      obj2.series[0] =obj;
-      result.push(obj2)
-    });
-    console.log(result);
-    
-    return result;
-  }
-  makeArray2(){
+  getQtdJogosMov(){
     let seriesArr: any = []
 
     this.data2.forEach((element: any) => {
       let obj = {name: '', value: 0}
-      obj.name = element.Nome;
-      obj.value = element.QTD;
+      obj.name = element.CountMov;
+      obj.value = element.NumJogos;
       seriesArr.push(obj);
     });
 
     let result = [
       {
-        name: 'Objetos Arte por coleção',
+        name: 'Qtd. de Jogos',
         series: seriesArr
       }
     ]
 
-    return result;
+    return seriesArr;
+  }
+  getJogadoresByPais(){
+    let seriesArr: any = []
+
+    this.data3.forEach((element: any) => {
+      let obj = {name: '', value: 0}
+      obj.name = element.NomePais;
+      obj.value = element.NumJogadores;
+      seriesArr.push(obj);
+    });
+
+    let result = [
+      {
+        name: 'Qtd. de Jogadores',
+        series: seriesArr
+      }
+    ]
+
+    return seriesArr;
   }
 }

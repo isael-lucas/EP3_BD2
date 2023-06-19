@@ -1,16 +1,16 @@
 <form *ngIf="type==='objeto'" [formGroup]="forms">
     <section class="filters">
       <div class="container-filter">   
-        <label for="arbitro">Hotel: </label>
-        <input type="text" id="year" formControlName="AnoCriacao">
+        <label for="Hotel">Hotel: </label>
+        <input type="text" id="year" formControlName="Hotel">
       </div>
       <div class="container-filter">
-        <label for="arbitro">Jogador: </label>
-        <input type="text" id="year" formControlName="AnoCriacao">
+        <label for="Jogadores">Jogador: </label>
+        <input type="text" id="year" formControlName="Jogadores">
       </div>
       <div class="container-filter">
-        <label for="arbitro">Arbitro: </label>
-        <input type="text" id="year" formControlName="AnoCriacao">
+        <label for="Arbitro">Arbitro: </label>
+        <input type="text" id="year" formControlName="Arbitro">
       </div>
       <i class="fa-thin fa-magnifying-glass"></i>
       <button class="buscar" (click)="filter(this.forms.value)">BUSCAR</button>

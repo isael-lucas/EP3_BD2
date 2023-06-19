@@ -12,7 +12,7 @@ header {
         p {
             font-size: 24px;
             font-weight: 700;
-            color: rgb(255, 255, 255);
+            color: #FEFEFE;
             margin-left: 12px;
         }
     }
@@ -26,8 +26,10 @@ header {
         letter-spacing: .1;
         color: rgb(255, 255, 255);
         font-weight: bold;
+        transition-duration: 1s;
         &:hover, &::after{
-            background-color: rgba($color: rgba(240, 187, 26, 0.053), $alpha: 1.0);
+            color: black;
+            background-color: rgba($color: #FEFEFE, $alpha: 1.0);
         }
     }
 }
