@@ -97,9 +97,9 @@ async function selectQtdJogosByQtdMovimentos(){
 
 async function selectNumJogadoresPorPais(){
     const conn = await connect(); 
-    const [rows] = await conn.query(`SELECT P.*, COUNT(*) AS NumJogadores FROM Pais P INNER JOIN `); 
+    const [rows] = await conn.query(`SELECT P.*, COUNT(*) AS NumJogadores FROM Pais P INNER JOIN  `); 
     return rows;
 }
 
 
-module.exports = {selectAll, selectFilterJogo, selectQtdJogosByQtdMovimentos, }
+module.exports = {selectAll, selectFilterJogo, selectQtdJogosByQtdMovimentos, selectNumJogadoresPorPais}
