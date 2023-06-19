@@ -11,9 +11,10 @@ export class GraphicsComponent implements OnInit{
 
   data!: any;
   data2!: any;
+  data3!: any;
   resultJogosMov: any;
   resultQtdJogosMov: any;
-  results2: any;
+  resultJogadoresPais: any;
   colorScheme: Color = {
     name: 'custom',
     selectable: true,  
@@ -50,15 +51,16 @@ export class GraphicsComponent implements OnInit{
       error: (error)=>{console.log(error);
       }
     })
-    // this.integration.selectAll('jogos_count_mov').subscribe({
-    //   next: (data)=>{
-    //     console.log(data);
-    //     this.data2 = data;
-    //     this.results2 = this.makeArray2();       
-    //   },
-    //   error: (error)=>{console.log(error);
-    //   }
-    // })
+    this.integration.selectAll('jogadores_by_pais').subscribe({
+      next: (data)=>{
+        console.log(data);
+        this.data3 = data;
+        console.log(this.data3);
+        this.resultJogadoresPais = this.getJogadoresByPais();       
+      },
+      error: (error)=>{console.log(error);
+      }
+    })
   }
 
   constructor(private integration: IntegrationService) {
@@ -96,6 +98,25 @@ export class GraphicsComponent implements OnInit{
     let result = [
       {
         name: 'Qtd. de Jogos',
+        series: seriesArr
+      }
+    ]
+
+    return seriesArr;
+  }
+  getJogadoresByPais(){
+    let seriesArr: any = []
+
+    this.data3.forEach((element: any) => {
+      let obj = {name: '', value: 0}
+      obj.name = element.NomePais;
+      obj.value = element.NumJogadores;
+      seriesArr.push(obj);
+    });
+
+    let result = [
+      {
+        name: 'Qtd. de Jogadores',
         series: seriesArr
       }
     ]

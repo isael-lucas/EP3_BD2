@@ -11,6 +11,7 @@
     [xAxisLabel]="'Jogos'"
     [showXAxisLabel]="true"
     [legend]="false"
+    [scheme]="colorScheme"
     >
     </ngx-charts-bar-vertical>
   </div>
@@ -24,6 +25,22 @@
     [yAxisLabel]="'Quantidade de Jogos'"
     [showYAxisLabel]="true"
     [xAxisLabel]="'Numero de Movimentos'"
+    [showXAxisLabel]="true"
+    [legend]="false"
+    [scheme]="colorScheme"
+    >
+    </ngx-charts-bar-vertical>
+  </div>
+
+  <div class="graphic-container">
+    <ngx-charts-bar-vertical
+    [results]="resultJogadoresPais"
+    [xAxis]="true"
+    [yAxis]="true"
+    [showGridLines]="false"
+    [yAxisLabel]="'Qtd. de Jogadores'"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="'Pais'"
     [showXAxisLabel]="true"
     [legend]="false"
     [scheme]="colorScheme"
