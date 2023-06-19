@@ -1,74 +1,18 @@
 <form *ngIf="type==='objeto'" [formGroup]="forms">
     <section class="filters">
-      <div class="container-filter">
-        <label for="">Tipo: </label>
-        <select name="object_type" id="type" formControlName="TipoArte">
-          <option value="Todos">Todos</option>
-          <option value="Pintura">Pintura</option>
-          <option value="Escultura">Escultura</option>
-          <option value="Outro">Outro</option>
-        </select>
+      <div class="container-filter">   
+        <label for="arbitro">Hotel: </label>
+        <input type="text" id="year" formControlName="AnoCriacao">
       </div>
       <div class="container-filter">
-        <label for="">Classe: </label>
-        <select name="object_type" id="class" formControlName="TipoPermanencia">
-          <option value="Todos">Todos</option>
-          <option value="Permanente">Permanente</option>
-          <option value="Emprestado">Emprestado</option>
-        </select>
+        <label for="arbitro">Jogador: </label>
+        <input type="text" id="year" formControlName="AnoCriacao">
       </div>
       <div class="container-filter">
-        <label for="year">Ano de Criação: </label>
-        <input type="number" id="year" formControlName="AnoCriacao">
+        <label for="arbitro">Arbitro: </label>
+        <input type="text" id="year" formControlName="AnoCriacao">
       </div>
       <i class="fa-thin fa-magnifying-glass"></i>
       <button class="buscar" (click)="filter(this.forms.value)">BUSCAR</button>
     </section>
-</form>
-
-<!-- Coleção -->
-
-<form *ngIf="type==='colecao'" [formGroup]="forms">
-  <section class="filters">
-    <div class="container-filter">
-      <label for="">Ordenar do: </label>
-      <select name="object_type" id="type" formControlName="Ordem">
-        <option value="desc">Maior pro menor</option>
-        <option value="asc">Menor pro maior</option>
-      </select>
-    </div>
-    <div class="container-filter">
-        <label for="month">Mês de Empréstimo: </label>
-        <select name="object_date" id="month" formControlName="Mes">
-          <option value="Todos">Todos</option>
-          <option *ngFor="let month of months" [ngValue]="month+1">{{month+1}}</option>
-        </select>
-    </div>
-    <div class="container-filter">
-      <label for="year">Ano de Empréstimo: </label>
-      <input type="number" id="year" formControlName="AnoCriacao">
-    </div>
-    <i class="fa-thin fa-magnifying-glass"></i>
-    <button class="buscar" (click)="filter(this.forms.value)">BUSCAR</button>
-  </section>
-</form>
-
-<!-- Compra -->
-
-<form *ngIf="type==='purchase'" [formGroup]="forms">
-  <section class="filters">
-    <div class="container-filter">
-        <label for="month">Mês de Aquisiçao: </label>
-        <select name="object_date" id="month" formControlName="Mes">
-          <option value="Todos">Todos</option>
-          <option *ngFor="let month of months" [ngValue]="month+1">{{month+1}}</option>
-        </select>
-    </div>
-    <div class="container-filter">
-      <label for="year">Ano de Aquisição: </label>
-      <input type="number" id="year" formControlName="AnoCriacao">
-    </div>
-    <i class="fa-thin fa-magnifying-glass"></i>
-    <button class="buscar" (click)="filter(this.forms.value)">BUSCAR</button>
-  </section>
 </form>

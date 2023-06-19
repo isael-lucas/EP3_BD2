@@ -1,9 +1,7 @@
 <div class="accordion-container">
     <div class="accordion-title" [ngClass]="setClass()">
         <button #button (click)="show_hide_content()" class="button-title">
-            <span style="color: rgb(181, 0, 0);">{{data.JogadorB}}</span>
-            X {{data.JogadorP}}
-            <span style="color: rgb(181, 0, 0);">{{data.Dia}}</span>
+            <span style="color: rgb(255, 251, 251);">{{data.JogadorB}} X {{data.JogadorP}} dia: {{data.Dia}}</span>
         </button>
     </div>
     <div #content class="accordion-content">
