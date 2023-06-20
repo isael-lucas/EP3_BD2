@@ -96,7 +96,7 @@ async function selectJogosQtdMovimentos(){
         J.CodJogo,
         COUNT(M.CodJogo) AS QtdMovimento
     FROM Jogo J 
-    INNER JOIN Movimento M ON J.CodJogo = M.CodJogo
+    LEFT JOIN Movimento M ON J.CodJogo = M.CodJogo
     GROUP BY J.CodJogo 
     ORDER BY J.CodJogo ASC`); 
     return rows;
@@ -108,7 +108,7 @@ async function selectQtdJogosByQtdMovimentos(){
     FROM (
         SELECT J.CodJogo, COUNT(M.CodJogo) AS QtdMovimento
         FROM Jogo J
-        INNER JOIN Movimento M ON J.CodJogo = M.CodJogo
+        LEFT JOIN Movimento M ON J.CodJogo = M.CodJogo
         GROUP BY J.CodJogo
     ) AS J GROUP BY QtdMovimento ORDER BY QtdMovimento ASC`); 
     return rows;
@@ -118,7 +118,7 @@ async function selectNumJogadoresPorPais(){
     const conn = await connect(); 
     const [rows] = await conn.query(`SELECT P.NomePais as NomePais, COUNT(J.NumAssoc) AS NumJogadores
     FROM Pais P 
-    INNER JOIN Participante J ON P.NumPais = J.CodPais 
+    LEFT JOIN Participante J ON P.NumPais = J.CodPais 
     WHERE TipoPart = 'J' 
     GROUP BY P.NumPais
     ORDER BY P.NomePais ASC`); 
