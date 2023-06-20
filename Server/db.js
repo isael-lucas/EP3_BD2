@@ -65,12 +65,12 @@ async function selectFilterJogo(values) {
                       CONCAT(H.NomeHotel, ' - ', H.EndHotel) AS Lugar,
                       COUNT(M.CODJOGO) AS QtdMovimento
                   FROM Jogo J 
-                  INNER JOIN Participante A ON A.NumAssoc = J.NumArb
-                  INNER JOIN Participante JB ON JB.NumAssoc = J.JogadorB 
-                  INNER JOIN Participante JP ON JP.NumAssoc = J.JogadorP 
-                  INNER JOIN Salao S ON S.IdSal = J.IdSal
-                  INNER JOIN Hotel H ON H.NomeHotel = S.NomeHotel 
-                  INNER JOIN Movimento M ON J.CODJOGO = M.CODJOGO
+                  LEFT JOIN Participante A ON A.NumAssoc = J.NumArb
+                  LEFT JOIN Participante JB ON JB.NumAssoc = J.JogadorB 
+                  LEFT JOIN Participante JP ON JP.NumAssoc = J.JogadorP 
+                  LEFT JOIN Salao S ON S.IdSal = J.IdSal
+                  LEFT JOIN Hotel H ON H.NomeHotel = S.NomeHotel 
+                  LEFT JOIN Movimento M ON J.CODJOGO = M.CODJOGO
                    ${b ? `WHERE ${jogadores !== null ? `(JB.NomeAssoc LIKE '%${jogadores}%' OR JP.NomeAssoc LIKE '%${jogadores}%')` : ''} 
                            ${arbitro !== null && jogadores !== null ? 'AND ' : ''}
                            ${arbitro !== null ? `A.NomeAssoc LIKE '%${arbitro}%'` : ''}
@@ -96,7 +96,7 @@ async function selectJogosQtdMovimentos(){
         J.CodJogo,
         COUNT(M.CodJogo) AS QtdMovimento
     FROM Jogo J 
-    INNER JOIN Movimento M ON J.CodJogo = M.CodJogo
+    LEFT JOIN Movimento M ON J.CodJogo = M.CodJogo
     GROUP BY J.CodJogo 
     ORDER BY J.CodJogo ASC`); 
     return rows;
@@ -108,7 +108,7 @@ async function selectQtdJogosByQtdMovimentos(){
     FROM (
         SELECT J.CodJogo, COUNT(M.CodJogo) AS QtdMovimento
         FROM Jogo J
-        INNER JOIN Movimento M ON J.CodJogo = M.CodJogo
+        LEFT JOIN Movimento M ON J.CodJogo = M.CodJogo
         GROUP BY J.CodJogo
     ) AS J GROUP BY QtdMovimento ORDER BY QtdMovimento ASC`); 
     return rows;
@@ -118,7 +118,7 @@ async function selectNumJogadoresPorPais(){
     const conn = await connect(); 
     const [rows] = await conn.query(`SELECT P.NomePais as NomePais, COUNT(J.NumAssoc) AS NumJogadores
     FROM Pais P 
-    INNER JOIN Participante J ON P.NumPais = J.CodPais 
+    LEFT JOIN Participante J ON P.NumPais = J.CodPais 
     WHERE TipoPart = 'J' 
     GROUP BY P.NumPais
     ORDER BY P.NomePais ASC`); 
