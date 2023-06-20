@@ -1,4 +1,4 @@
-const SENHA = 'password'
+const SENHA = 'root'
 async function connect() {
     if (global.connection && global.connection.state !== 'disconnected')
         return global.connection;
