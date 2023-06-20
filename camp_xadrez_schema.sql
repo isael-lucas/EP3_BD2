@@ -121,18 +121,32 @@ VALUES
     ('Hotel D', 'Endereço D', '4444444444'),
     ('Hotel E', 'Endereço E', '5555555555');
 
-INSERT INTO Participante (NumAssoc, NomeAssoc, Endereco, TelContato, CodPais, TipoPart)
-VALUES 
-    (1, 'João Silva', 'Endereço 1', '1111111111', 'BR', 'J'),
-    (2, 'John Smith', 'Endereço 2', '2222222222', 'US', 'J'),
-    (3, 'Pedro López', 'Endereço 3', '3333333333', 'ES', 'J'),
-    (4, 'William Johnson', 'Endereço 4', '4444444444', 'UK', 'J'),
-    (5, 'Jean Dupont', 'Endereço 5', '5555555555', 'FR', 'J'),
-    (6, 'José da Silva', 'Endereço 6', '1111111111', 'BR', 'J'),
-    (7, 'Michael Brown', 'Endereço 7', '2222222222', 'US', 'J'),
-    (8, 'Carlos García', 'Endereço 8', '3333333333', 'ES', 'J'),
-    (9, 'David Williams', 'Endereço 9', '4444444444', 'UK', 'A'),
-    (10, 'Pierre Martin', 'Endereço 10', '5555555555', 'FR', 'A');
+-- Inserção de dados para a tabela Pais
+INSERT INTO Pais (NumPais, NomePais, NumClubes) VALUES
+  ('BR', 'Brasil', 2),
+  ('US', 'Estados Unidos', 2),
+  ('ES', 'Espanha', 3),
+  ('DE', 'Alemanha', 2),
+  ('IT', 'Itália', 2);
+  
+-- Inserção de dados para a tabela Participante
+INSERT INTO Participante (NumAssoc, NomeAssoc, Endereco, TelContato, CodPais, TipoPart) VALUES
+  (1, 'João Silva', 'Rua A, 123', '11111111', 'BR', 'J'),
+  (2, 'Maria Santos', 'Rua B, 456', '22222222', 'BR', 'J'),
+  (3, 'John Doe', 'Street C, 789', '33333333', 'US', 'J'),
+  (4, 'Emily Johnson', 'Street D, 1011', '44444444', 'US', 'J'),
+  (5, 'Pedro Gonzalez', 'Calle E, 1213', '55555555', 'ES', 'J'),
+  (6, 'Isabella Lopez', 'Calle F, 1415', '66666666', 'ES', 'J'),
+  (7, 'Hans Schmidt', 'Strasse G, 1617', '77777777', 'DE', 'J'),
+  (8, 'Greta Müller', 'Strasse H, 1819', '88888888', 'DE', 'J'),
+  (9, 'Luca Rossi', 'Via I, 2021', '99999999', 'IT', 'J'),
+  (10, 'Giulia Bianchi', 'Via J, 2223', '10101010', 'IT', 'J'),
+  (11, 'Miguel Fernandez', 'Calle K, 2425', '11111111', 'ES', 'A'),
+  (12, 'Sophia Hernandez', 'Calle L, 2627', '12121212', 'ES', 'A'),
+  (13, 'Hugo Müller', 'Strasse M, 2829', '13131313', 'DE', 'A'),
+  (14, 'Emilia Schmidt', 'Strasse N, 3031', '14141414', 'DE', 'A'),
+  (15, 'Francesco Ricci', 'Via O, 3233', '15151515', 'IT', 'A');
+
 
 INSERT INTO Salao (IdSal, NomeHotel, capacidade)
 VALUES 
@@ -164,7 +178,9 @@ VALUES
     (5, 'Nível 5'),
     (6, 'Nível 2'),
     (7, 'Nível 3'),
-    (8, 'Nível 4');
+    (8, 'Nível 2'),
+    (9, 'Nível 1'),
+    (10, 'Nível 4');
 
 INSERT INTO CampPart (NumAssoc, NomeCamp, TipoParticip)
 VALUES 
@@ -184,16 +200,20 @@ VALUES
 
 INSERT INTO Jogo (CodJogo, JogadorB, JogadorP, NumArb, IdSal, EntrVend, DiaJorn, MesJorn, AnoJorn)
 VALUES 
-    (1, 1, 8, 9, 1, 100, 1, 6, 2023),
-    (2, 2, 7, 10, 2, 200, 2, 6, 2023),
-    (3, 3, 6, 9, 3, 300, 3, 6, 2023),
-    (4, 4, 5, 10, 4, 400, 4, 6, 2023),
-    (5, 1, 5, 9, 5, 500, 5, 6, 2023),
+    (1, 1, 9, 9, 1, 100, 1, 6, 2023),
+    (2, 2, 10, 10, 2, 200, 2, 6, 2023),
+    (3, 3, 8, 9, 3, 300, 3, 6, 2023),
+    (4, 4, 6, 10, 4, 400, 4, 6, 2023),
+    (5, 5, 7, 9, 5, 500, 5, 6, 2023),
     (6, 3, 7, 10, 4, 500, 4, 6, 2023),
-    (7, 2, 6, 9, 5, 500, 5, 6, 2023),
-    (8, 1, 6, 10, 3, 500, 3, 6, 2023),
-    (9, 5, 7, 9, 3, 500, 3, 6, 2023),
-    (10, 5, 6, 10, 5, 500, 5, 6, 2023);
+    (7, 5, 6, 9, 5, 500, 5, 6, 2023),
+    (8, 10, 5, 10, 3, 500, 3, 6, 2023),
+    (9, 2, 6, 9, 3, 500, 3, 6, 2023),
+    (10, 5, 8, 9, 3, 500, 30, 6, 2023),
+    (11, 6, 3, 9, 3, 500, 25, 6, 2023),
+    (12, 1, 7, 9, 3, 500, 27, 6, 2023),
+    (13, 10, 4, 10, 5, 500, 28, 6, 2023),
+    (14, 9, 3, 10, 5, 500, 30, 6, 2023);
 
 INSERT INTO Movimento (CodJogo, IdMov, Jogada, Comentario)
 VALUES 
@@ -607,11 +627,3 @@ VALUES
     (10, 408, 'Jogada 25', 'C'),
     (10, 409, 'Jogada 26', 'C'),
     (10, 410, 'Jogada 27', 'C');
-
-INSERT INTO Pais (NumPais, NomePais, NumClubes)
-VALUES 
-    ('BR', 'Brasil', 10),
-    ('US', 'Estados Unidos', 15),
-    ('ES', 'Espanha', 8),
-    ('UK', 'Reino Unido', 12),
-    ('FR', 'França', 6);

@@ -1,5 +1,4 @@
 const SENHA = 'password'
-const SENHA = 'password'
 async function connect() {
     if (global.connection && global.connection.state !== 'disconnected')
         return global.connection;
@@ -66,12 +65,12 @@ async function selectFilterJogo(values) {
                       CONCAT(H.NomeHotel, ' - ', H.EndHotel) AS Lugar,
                       COUNT(M.CODJOGO) AS QtdMovimento
                   FROM Jogo J 
-                  INNER JOIN Participante A ON A.NumAssoc = J.NumArb
-                  INNER JOIN Participante JB ON JB.NumAssoc = J.JogadorB 
-                  INNER JOIN Participante JP ON JP.NumAssoc = J.JogadorP 
-                  INNER JOIN Salao S ON S.IdSal = J.IdSal
-                  INNER JOIN Hotel H ON H.NomeHotel = S.NomeHotel 
-                  INNER JOIN Movimento M ON J.CODJOGO = M.CODJOGO
+                  LEFT JOIN Participante A ON A.NumAssoc = J.NumArb
+                  LEFT JOIN Participante JB ON JB.NumAssoc = J.JogadorB 
+                  LEFT JOIN Participante JP ON JP.NumAssoc = J.JogadorP 
+                  LEFT JOIN Salao S ON S.IdSal = J.IdSal
+                  LEFT JOIN Hotel H ON H.NomeHotel = S.NomeHotel 
+                  LEFT JOIN Movimento M ON J.CODJOGO = M.CODJOGO
                    ${b ? `WHERE ${jogadores !== null ? `(JB.NomeAssoc LIKE '%${jogadores}%' OR JP.NomeAssoc LIKE '%${jogadores}%')` : ''} 
                            ${arbitro !== null && jogadores !== null ? 'AND ' : ''}
                            ${arbitro !== null ? `A.NomeAssoc LIKE '%${arbitro}%'` : ''}
