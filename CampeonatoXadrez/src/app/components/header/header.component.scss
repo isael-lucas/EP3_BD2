@@ -1,17 +1,18 @@
 header {
-    background-color: rgb(1, 36, 113);
+    background-color: rgb(0, 0, 0);
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px;
 
-    .nome-museu{
+    .nome-site{
         display: flex;
         align-items: center;
+        font-weight: bolder;
         p {
             font-size: 24px;
             font-weight: 700;
-            color: white;
+            color: #FEFEFE;
             margin-left: 12px;
         }
     }
@@ -23,9 +24,12 @@ header {
         padding: 12px;
         border-radius: 8px;
         letter-spacing: .1;
-        color: white;
+        color: rgb(255, 255, 255);
+        font-weight: bold;
+        transition-duration: 1s;
         &:hover, &::after{
-            background-color: rgba($color: rgba(1, 36, 140, 0.053), $alpha: 1.0);
+            color: black;
+            background-color: rgba($color: #FEFEFE, $alpha: 1.0);
         }
     }
 }

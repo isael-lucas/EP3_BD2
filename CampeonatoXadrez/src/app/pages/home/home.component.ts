@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
   constructor(private integration: IntegrationService){}
 
   ngOnInit(){
-    this.integration.selectAll('objects').subscribe({
+    this.integration.selectAll('jogos').subscribe({
       next: (data)=>{
         console.log(data);
         this.data = data;

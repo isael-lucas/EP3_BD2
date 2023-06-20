@@ -1,22 +1,54 @@
 <div class="flex-center">
 
   <div class="graphic-container">
-    <ngx-charts-line-chart
-    [results]="results"
+    <ngx-charts-bar-vertical
+    [results]="resultJogosMov"
     [xAxis]="true"
     [yAxis]="true"
     [showGridLines]="false"
-    [yAxisLabel]="'Custo'"
+    [yAxisLabel]="'Quantidade de Movimentos'"
     [showYAxisLabel]="true"
-    [xAxisLabel]="'Objetos Arte'"
+    [xAxisLabel]="'Jogos'"
     [showXAxisLabel]="true"
-    [legend]="true"
-    [legendTitle]="'Gastos'"
+    [legend]="false"
+    [scheme]="colorScheme"
     >
-    </ngx-charts-line-chart>
+    </ngx-charts-bar-vertical>
   </div>
 
   <div class="graphic-container">
+    <ngx-charts-bar-vertical
+    [results]="resultQtdJogosMov"
+    [xAxis]="true"
+    [yAxis]="true"
+    [showGridLines]="false"
+    [yAxisLabel]="'Quantidade de Jogos'"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="'Numero de Movimentos'"
+    [showXAxisLabel]="true"
+    [legend]="false"
+    [scheme]="colorScheme"
+    >
+    </ngx-charts-bar-vertical>
+  </div>
+
+  <div class="graphic-container">
+    <ngx-charts-bar-vertical
+    [results]="resultJogadoresPais"
+    [xAxis]="true"
+    [yAxis]="true"
+    [showGridLines]="false"
+    [yAxisLabel]="'Qtd. de Jogadores'"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="'Pais'"
+    [showXAxisLabel]="true"
+    [legend]="false"
+    [scheme]="colorScheme"
+    >
+    </ngx-charts-bar-vertical>
+  </div>
+
+  <!-- <div class="graphic-container">
     <ngx-charts-bar-vertical-stacked
     [results]="resultsDate"
     [xAxis]="true"
@@ -46,5 +78,5 @@
     [legendTitle]="'Empréstimos'"
     >
     </ngx-charts-line-chart>
-  </div>
+  </div> -->
 </div>

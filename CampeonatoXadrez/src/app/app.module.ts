@@ -14,9 +14,6 @@ import { GraphicsComponent } from './pages/graphics/graphics.component'
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { CollectionsComponent } from './pages/collections/collections.component';
-import { PurchasesComponent } from './pages/purchases/purchases.component';
-import { AccordionCollectionComponent } from './components/accordion-collection/accordion-collection.component';
 
 @NgModule({
   declarations: [
@@ -26,9 +23,6 @@ import { AccordionCollectionComponent } from './components/accordion-collection/
     AccordionComponent,
     HomeComponent,
     GraphicsComponent,
-    CollectionsComponent,
-    PurchasesComponent,
-    AccordionCollectionComponent,
   ],
   imports: [
     BrowserModule,
